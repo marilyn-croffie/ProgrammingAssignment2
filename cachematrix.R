@@ -6,14 +6,29 @@
 ## inverse of the matrix
 
 makeCacheMatrix <- function(x = matrix()) {
+        # initializes inverse variable as null
         s <- NULL
+        
+        # assigns a matrix
         set <- function(y){
+                # set matrix values
                 x <<- y
-                s <<- NULL
+                
+                # resets the cached inverse value to null
+                # after matrix has been changed or set
+                s <<- NULL 
         }
+        
+        # returns the matrix
         get <- function() x
+        
+        # assigns a matrix inverse 
         setinv <- function(inverse) s <<- inverse
+        
+        # returns the inverse matrix
         getinv <- function() s
+        
+        # returns a list of functions enclosed in the parent function
         list(set=set, get=get, setinv=setinv, getinv=getinv)
 }
 
@@ -26,14 +41,42 @@ makeCacheMatrix <- function(x = matrix()) {
 ## inverse inside the setinv function
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        
+        # extracts the value of the cached inverse matrix from 
+        # the function above.
         s <- x$getinv()
+        
+        # checks if the inverse matrix cached variable is not
+        # null, and returns a matrix that is the inverse of 'x'
         if(!is.null(s)){
                 message("getting cached data")
                 return(s)
         }
+        
+        # if variable is null, it extracts the matrix data
         data <- x$get()
+        
+        # calculates the matrix inverse
         s <- solve(data, ...)
+        
+        # sets the matrix inverse in the above function
         x$setinv(s)
+        
+        # Returns a matrix that is the inverse of 'x'
         s
 }
+
+## Example
+# creating a makeCacheMatrix object
+mat <- makeCacheMatrix(matrix(1:4,2,2))
+
+# checking the values of the matrix
+mat$get()
+
+# setting the inverse of the matrix using the first function
+mat$setinv(inv(mat$get()))
+
+# checking the values of the cached inverse matrix using the
+# second function
+p <- cacheSolve(mat)
+p
