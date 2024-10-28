@@ -22,7 +22,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## with the above function. It first checks to see if the 
 ## inverse has already been calculated. If so, it gets the
 ## value from cache and skips the computation. Otherwise, it
-## calculate the inverse of the matrix and sets the value of 
+## calculates the inverse of the matrix and sets the value of 
 ## inverse inside the setinv function
 
 cacheSolve <- function(x, ...) {
